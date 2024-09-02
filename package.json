@@ -1,6 +1,6 @@
 {
   "name": "@lvlte/modf",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Get the integral and fractional parts of a given number.",
   "license": "MIT",
   "author": "Eric Lavault <lvlte.code@gmail.com>",

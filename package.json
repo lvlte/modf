@@ -1,0 +1,61 @@
+{
+  "name": "@lvlte/modf",
+  "version": "0.0.0",
+  "description": "Get the integral and fractional parts of a given number.",
+  "license": "MIT",
+  "author": "Eric Lavault <lvlte.code@gmail.com>",
+  "repository": "lvlte/tsconfig",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "engines": {
+    "node": ">=18.20"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest",
+    "prebuild": "rimraf dist && make-dir dist",
+    "build": "tsc && tsc -p tsconfig-cjs.json",
+    "postbuild": "(echo { && echo   \"type\": \"commonjs\" && echo }) > ./dist/cjs/package.json",
+    "prepublishOnly": "npm test && npm run build && tsc --emitDeclarationOnly true --removeComments false && tsc -p tsconfig-cjs.json --emitDeclarationOnly true --removeComments false"
+  },
+  "keywords": [
+    "number",
+    "float",
+    "int",
+    "mod",
+    "integer",
+    "fractional",
+    "part",
+    "integral",
+    "decimal",
+    "math",
+    "ipart",
+    "fpart",
+    "split",
+    "precision",
+    "floating point"
+  ],
+  "devDependencies": {
+    "@lvlte/tsconfig": "^1.0.1",
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "make-dir-cli": "^4.0.0",
+    "rimraf": "^6.0.1",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.5.4"
+  }
+}

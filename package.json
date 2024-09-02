@@ -4,7 +4,10 @@
   "description": "Get the integral and fractional parts of a given number.",
   "license": "MIT",
   "author": "Eric Lavault <lvlte.code@gmail.com>",
-  "repository": "lvlte/tsconfig",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lvlte/modf.git"
+  },
   "type": "module",
   "main": "./dist/cjs/index.js",
   "exports": {

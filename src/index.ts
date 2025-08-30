@@ -34,3 +34,24 @@ export function modf(x: number): [number, number] {
 
   return [ipart, fpart];
 }
+
+/**
+ * Return the integral part of the given number.
+ *
+ * @param x - The input number.
+ * @returns The integer part of `x`.
+ */
+export const ipart = (x: number): number => {
+  if (Number.isFinite(x)) {
+    return Math.trunc(x);
+  }
+  return NaN;
+}
+
+/**
+ * Return the fractional part of the given number.
+ *
+ * @param x - The input number
+ * @returns The fractional part of `x`.
+ */
+export const fpart = (x: number): number => modf(x)[1];

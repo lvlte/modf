@@ -1,4 +1,4 @@
-import { modf } from '../src/index';
+import { modf, ipart, fpart } from '../src/index';
 
 const fixture = {
   integers: [
@@ -69,6 +69,8 @@ describe('Integers', () => {
     expect(Number.isInteger(x)).toBe(true);
     expect(modf(x)).toStrictEqual([x, 0]);
     expect(modf(-x)).toStrictEqual([-x, -0]);
+    expect([ipart(x), fpart(x)]).toStrictEqual([x, 0]);
+    expect([ipart(-x), fpart(-x)]).toStrictEqual([-x, -0]);
   });
 });
 
@@ -79,6 +81,8 @@ describe('Floats with no integer part', () => {
     expect(x).toBeLessThan(1);
     expect(modf(x)).toStrictEqual([0, x]);
     expect(modf(-x)).toStrictEqual([-0, -x]);
+    expect([ipart(x), fpart(x)]).toStrictEqual([0, x]);
+    expect([ipart(-x), fpart(-x)]).toStrictEqual([-0, -x]);
   });
 });
 
@@ -89,6 +93,8 @@ describe('Floats with non-zero integer part and fractional part', () => {
     expect(x).toBeGreaterThan(1);
     expect(modf(x)).toStrictEqual([int, frac]);
     expect(modf(-x)).toStrictEqual([-int, -frac]);
+    expect([ipart(x), fpart(x)]).toStrictEqual([int, frac]);
+    expect([ipart(-x), fpart(-x)]).toStrictEqual([-int, -frac]);
   });
 });
 
@@ -96,6 +102,7 @@ describe('Wrong types', () => {
   test.each(fixture.wrongTypes)('%s', (x: any) => {
     expect(typeof x).not.toBe('number');
     expect(modf(x)).toStrictEqual([NaN, NaN]);
+    expect([ipart(x), fpart(x)]).toStrictEqual([NaN, NaN]);
   });
 });
 
@@ -103,5 +110,6 @@ describe('Edge cases', () => {
   test.each(fixture.edgeCases)('%s', (x: number) => {
     expect(Number.isFinite(x)).toBe(false);
     expect(modf(x)).toStrictEqual([NaN, NaN]);
+    expect([ipart(x), fpart(x)]).toStrictEqual([NaN, NaN]);
   });
 });

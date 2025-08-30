@@ -10,9 +10,7 @@ export function modf(x: number): [number, number] {
     return [NaN, NaN];
   }
 
-  const str = x.toString();
   const sign = Math.sign(x);
-
   const ipart = Math.trunc(x);
   let fpart;
 
@@ -23,14 +21,15 @@ export function modf(x: number): [number, number] {
     fpart = x;
   }
   else {
-    // NB. Exponential notation with positive exponent (≥ e+21) implies that
-    // there is no room for the significand to encode a fractional part, any
+    // NB. Exponential notation with a positive exponent (|x| ≥ 1e+21) implies
+    // there is no room for the significand to encode a fractional part, so any
     // number represented that way is an integer (1st condition).
-    // If represented with a negative exponent (≤ 1e-7), then its integer part
-    // equals ±0 (2nd condition).
-    // When neither condition is satisfied then the string representation takes
-    // the form `<ipart>.<fpart>`.
-    fpart = sign * +`.${str.split('.')[1]}`;
+    // If represented with a negative exponent (|x| < 1e-6), then the integer
+    // part of the number always equals ±0 (2nd condition).
+    // When neither condition is satisfied then the string representation always
+    // takes the form `${ipart}.${decimals}`.
+    const decimals = x.toString().split('.')[1];
+    fpart = sign * Number(`0.${decimals}`);
   }
 
   return [ipart, fpart];

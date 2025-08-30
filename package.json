@@ -42,7 +42,6 @@
     "mod",
     "integer",
     "fractional",
-    "part",
     "integral",
     "decimal",
     "math",
@@ -50,7 +49,9 @@
     "fpart",
     "split",
     "precision",
-    "floating point"
+    "float64",
+    "IEEE-754",
+    "rounding"
   ],
   "devDependencies": {
     "@lvlte/tsconfig": "^1.0.1",

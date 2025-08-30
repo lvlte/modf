@@ -1,5 +1,6 @@
 /**
- * Return the integral and fractional parts of the given number.
+ * Return the integral and fractional parts of the given number. Both parts
+ * have the same sign as the input.
  *
  * @param x - The input number.
  * @returns A tuple `[ipart, fpart]`, respectively the integral and fractional

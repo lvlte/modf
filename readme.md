@@ -11,8 +11,8 @@ function modf(x: number, literal: boolean = false): [number, number]
 > number literal, or if its value is deterministic, and if its representation
 > matches exactly the value to be used).
 >
-> _@param_ `x` - The input number.
-> _@param_ `literal` - Whether to read `x` as a base 10 literal (default: `false`).
+> _@param_ `x` - The input number.  
+> _@param_ `literal` - Whether to read `x` as a base 10 literal (default: `false`).  
 > _@returns_ A tuple `[ipart, fpart]`, respectively the integral and fractional
 > parts of `x`, or `[NaN, NaN]` if `x` is not a finite number.
 
@@ -103,3 +103,7 @@ x = 2**48 + 0.2;
 xf = 10 * fpart(x));        // 1.875
 xf = 10 * fpart(x, true));  // 2
 ```
+
+**Always leave the `literal` parameter to `false` when `x` is the result of
+previous calculations (except for rare cases where its value is deterministic
+like in the last example above).**

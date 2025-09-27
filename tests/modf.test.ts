@@ -67,10 +67,12 @@ describe('Integers', () => {
   test.each(fixture.integers)('±%s', (x: number) => {
     x = Math.abs(x);
     expect(Number.isInteger(x)).toBe(true);
-    expect(modf(x)).toStrictEqual([x, 0]);
-    expect(modf(-x)).toStrictEqual([-x, -0]);
-    expect([ipart(x), fpart(x)]).toStrictEqual([x, 0]);
-    expect([ipart(-x), fpart(-x)]).toStrictEqual([-x, -0]);
+    [true, false].forEach(literal =>  {
+      expect(modf(x, literal)).toStrictEqual([x, 0]);
+      expect(modf(-x, literal)).toStrictEqual([-x, -0]);
+      expect([ipart(x), fpart(x, literal)]).toStrictEqual([x, 0]);
+      expect([ipart(-x), fpart(-x, literal)]).toStrictEqual([-x, -0]);
+    });
   });
 });
 
@@ -79,22 +81,34 @@ describe('Floats with no integer part', () => {
     x = Math.abs(x);
     expect(Number.isInteger(x)).toBe(false);
     expect(x).toBeLessThan(1);
-    expect(modf(x)).toStrictEqual([0, x]);
-    expect(modf(-x)).toStrictEqual([-0, -x]);
-    expect([ipart(x), fpart(x)]).toStrictEqual([0, x]);
-    expect([ipart(-x), fpart(-x)]).toStrictEqual([-0, -x]);
+    [true, false].forEach(literal =>  {
+      expect(modf(x, literal)).toStrictEqual([0, x]);
+      expect(modf(-x, literal)).toStrictEqual([-0, -x]);
+      expect([ipart(x), fpart(x, literal)]).toStrictEqual([0, x]);
+      expect([ipart(-x), fpart(-x, literal)]).toStrictEqual([-0, -x]);
+    });
   });
 });
 
 describe('Floats with non-zero integer part and fractional part', () => {
-  test.each<number[]>(fixture.floats1)('±%s', (x, int, frac) => {
-    x = Math.abs(x);
-    expect(Number.isInteger(x)).toBe(false);
-    expect(x).toBeGreaterThan(1);
-    expect(modf(x)).toStrictEqual([int, frac]);
-    expect(modf(-x)).toStrictEqual([-int, -frac]);
-    expect([ipart(x), fpart(x)]).toStrictEqual([int, frac]);
-    expect([ipart(-x), fpart(-x)]).toStrictEqual([-int, -frac]);
+  describe('True value (literal = false)', () => {
+    test.each<number[]>(fixture.floats1)('±%s', (x, int) => {
+      x = Math.abs(x);
+      expect(Number.isInteger(x)).toBe(false);
+      expect(x).toBeGreaterThan(1);
+      expect(modf(x)).toStrictEqual([int, x % 1]);
+      expect(modf(-x)).toStrictEqual([-int, -x % 1]);
+      expect([ipart(x), fpart(x)]).toStrictEqual([int, x % 1]);
+      expect([ipart(-x), fpart(-x)]).toStrictEqual([-int, -x % 1]);
+    });
+  });
+  describe('Base 10 string (literal = true)', () => {
+    test.each<number[]>(fixture.floats1)('±%s', (x, int, frac) => {
+      expect(modf(x, true)).toStrictEqual([int, frac]);
+      expect(modf(-x, true)).toStrictEqual([-int, -frac]);
+      expect([ipart(x), fpart(x, true)]).toStrictEqual([int, frac]);
+      expect([ipart(-x), fpart(-x, true)]).toStrictEqual([-int, -frac]);
+    });
   });
 });
 

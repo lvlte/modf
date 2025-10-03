@@ -71,7 +71,7 @@ in the result :
                    ^---------------------------------------------------^
                                          53
 
-       ԑԑ < ԑ
+     |ԑԑ| < |ԑ|
 
 The fractional part of  0.3 has 53 bits of precision
 The fractional part of  1.3 has 52 bits of precision
